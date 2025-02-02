@@ -15,8 +15,7 @@ data "aws_subnet" "default" {
   }
 
   # Specify the exact availability zone to ensure only one subnet matches
-  availability_zone = "us-east-1a" # Adjust to the zone you want to use
-}
+  availability_zone = "us-east-1a" 
 
 # Security Group to allow required ports
 resource "aws_security_group" "allow_required_ports" {
@@ -85,7 +84,7 @@ resource "aws_security_group" "allow_required_ports" {
     cidr_blocks = ["0.0.0.0/0"]
   }
 
-  # Allow all outbound traffic
+  
   egress {
     from_port   = 0
     to_port     = 0
@@ -94,14 +93,14 @@ resource "aws_security_group" "allow_required_ports" {
   }
 }
 
-# Create an EC2 instance using the specified AMI, default subnet, internet gateway, and key pair
+
 resource "aws_instance" "vm" {
-  ami                    = "ami-0c614dee691cbbf37" # Specified AMI ID
+  ami                    = "ami-0c614dee691cbbf37" 
   instance_type          = "t2.micro"
   subnet_id              = data.aws_subnet.default.id
   key_name               = "vockey" # Use the default key pair
   vpc_security_group_ids = [aws_security_group.allow_required_ports.id]
-  associate_public_ip_address = true # Ensure it gets a public IP
+  associate_public_ip_address = true 
 
   tags = {
     Name = "MyTestVM"
