@@ -69,6 +69,14 @@ resource "aws_security_group" "allow_required_ports" {
     cidr_blocks = ["0.0.0.0/0"]
   }
 
+  # Allow port 3307
+  ingress {
+    from_port   = 3307
+    to_port     = 3307
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
   # Allow ICMP (ping)
   ingress {
     from_port   = -1
@@ -86,7 +94,7 @@ resource "aws_security_group" "allow_required_ports" {
   }
 }
 
-# Create an EC2 instance using the specified AMI, default subnet, internet gateway, and vockey key pair
+# Create an EC2 instance using the specified AMI, default subnet, internet gateway, and key pair
 resource "aws_instance" "vm" {
   ami                    = "ami-0c614dee691cbbf37" # Specified AMI ID
   instance_type          = "t2.micro"
@@ -96,7 +104,7 @@ resource "aws_instance" "vm" {
   associate_public_ip_address = true # Ensure it gets a public IP
 
   tags = {
-    Name = "MyVM"
+    Name = "MyTestVM"
   }
 }
 
